@@ -25,7 +25,6 @@ serverStartDetails();
     correct port, stop command processing, page folder setting, 
     and page rendering(through app listen)
 */
-/* test */
 function serverStartDetails(){
     process.stdin.setEncoding("utf8");
 
