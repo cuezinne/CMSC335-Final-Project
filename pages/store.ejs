@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Storepage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1> <a href="/">EziBanks</a> </h1>
+    <h2>Essential Oils</h2>
+    <form action="/orderConfirm" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <br>
+        <button id="find-me" type="button">Find</button>
+        <br>
+        <label for="longitude">Longitude: </label>
+        <input type="text" name="longitude" id="longitude" readonly required> <br>
+        <label for="longitude">Latitude: </label>
+        <input type="text" name="latitude" id="latitude" readonly required>  <br>
+        <a id="map"></a> <br>
+        <p id="status"></p>
+
+        <input type="checkbox" id="Lavender" name="lavender">
+        <label for="Lavender">Lavender</label>
+        <br>
+        <input type="checkbox" id="rose" name="rose">
+        <label for="rose">Rose</label>
+        <br>
+        <input type="checkbox" id="myrrh" name="myrrh">
+        <label for="myrrh">Myrrh</label>
+        <br>
+        <input type="checkbox" id="vetiver" name="vetiver">
+        <label for="vetiver">Vetiver</label>
+        <br>
+        <input type="checkbox" id="hyssop" name="hyssop">
+        <label for="hyssop">Hyssop</label>
+        <br>
+        <input type="checkbox" id="frankincense" name="frankincense">
+        <label for="frankincense">Frankincense</label><br>
+        <input type="submit">
+    </form>
+    <hr>
+</body>
+
+<script>
+    function geoFindMe() {
+    const status = document.querySelector("#status");
+    const mapLink = document.querySelector("#map");
+    const longitudeText = document.querySelector("#longitude");
+    const latitudeText = document.querySelector("#latitude");
+
+    mapLink.href = "";
+    mapLink.textContent = "";
+
+    function success(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      status.textContent = "";
+      mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+      mapLink.textContent = `Delivering here`;
+      longitudeText.value = `${longitude}`;
+      latitudeText.value = `${latitude}`;
+    }
+
+    function error() {
+      status.textContent = "Unable to retrieve your location";
+    }
+
+    if (!navigator.geolocation) {
+      status.textContent = "Geolocation is not supported by your browser";
+    } else {
+      status.textContent = "Retrieving Data…";
+      navigator.geolocation.getCurrentPosition(success, error);
+    }
+  }
+
+  document.querySelector("#find-me").addEventListener("click", geoFindMe);
+</script>
+
+</html>
