@@ -48,18 +48,13 @@ function serverStartDetails(){
     app.set("view engine", "ejs");
     app.use(bodyParser.urlencoded({ extended:false }));
 
-    /* function that calls the express requests for each page */
-    serverPages();
+    app.get("/", (request, response) => {
+        response.render("index");
+    });
 
     app.listen(portNumber, (err)=> {
         if(err){
             console.log("Starting server failed.");
         }
-    });
-}
-
-function serverPages(){
-    app.get("/", (request, response) => {
-        response.render("index");
     });
 }
